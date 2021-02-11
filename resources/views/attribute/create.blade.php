@@ -6,6 +6,20 @@
     <div class="card-header">
         <h1 class="text-center">Add an attribute</h1>
     </div>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div><br />
+    @endif
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ session()->get('success') }} </p>
+    </div>
+    @endif
     <div class="card-body">
         <form action="{{ route('attribute.store') }}" method="POST">
             @csrf
@@ -29,18 +43,17 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="expired-at">Expired at:</label>
+                <label for="expired_at">Expired at:</label>
                 <input type="datetime-local" id="expired_at" name="expired_at">
             </div>
             <div class="form-group">
-                <label for="channel">Objects</label>
-                <select name="channel" id="channel" class="form-control">
+                <label for="object">Choose an object</label>
+                <select name="object" id="object" class="form-control">
                     @foreach($objects as $object)
                     <option value="{{ $object->id }}"> {{ $object->name }}</option>
                     @endforeach
                 </select>
             </div>
-
             <button type="submit" class="btn btn-success">Submit</button>
         </form>
     </div>

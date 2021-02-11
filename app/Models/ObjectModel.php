@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ObjectModel extends Model
 {
     use HasFactory;
-
     protected $fillable =[
         'name',
         'user_id'

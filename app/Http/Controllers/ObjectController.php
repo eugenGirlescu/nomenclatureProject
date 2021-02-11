@@ -16,6 +16,7 @@ class ObjectController extends Controller
      */
     public function index()
     {
+        return view('object.index');
     }
 
     /**
@@ -36,6 +37,9 @@ class ObjectController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|min:6',
+        ]);
         $object = new ObjectModel();
         $object->user_id = Auth::id();
         $object->name = $request->name;

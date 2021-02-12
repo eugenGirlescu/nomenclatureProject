@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Attribute extends Model
 {
     use HasFactory;
+
+    protected $fillable =[
+        'attribute_name',
+        'employee_name',
+        'employee_phone',
+        'active',
+        'expired_at'
+    ];
+
+    protected $dates =['expired_at'];
 }

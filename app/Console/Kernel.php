@@ -4,6 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\User;
+use App\Notifications\ExpiredDateNotification;
+use App\Models\Attribute;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +27,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $users = User::where('expired_at', '=', Carbon::now()->addDays(5))->toDateString();
+            $attribute = Attribute::find(1);
+            Notification::send($users, new ExpiredDateNotification($attribute));
+        });
     }
 
     /**

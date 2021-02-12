@@ -14,6 +14,7 @@ class NotificationController extends Controller
     public function notifications()
     {
         $notification = auth()->user()->notifications->first()->data;
+        //dd($notification);
         auth()->user()->unreadNotifications->markAsRead();
 
         return view('user.notifications', ['notification' => $notification]);

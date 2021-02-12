@@ -23,7 +23,6 @@ class CreateAttributesTable extends Migration
             $table->integer('employee_phone');
             $table->string('active');
             $table->date('expired_at');
-            $table->string('notified')->default('no');
         });
     }
 

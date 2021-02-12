@@ -5,7 +5,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Notification</div>
-
                 <div class="card-body">
                     You have a new notification, your {{ $notification['name'] }} is set to expire at
                     {{ $notification['expired_at'] }}!

@@ -28,8 +28,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $users = User::where('expired_at', '=', Carbon::now()->addDays(5))->toDateString();
-            $attribute = Attribute::find(1);
+            $attribute = Attribute::where('expired_at', '=', Carbon::now()->addDays(5))->toDateString();
+            $users = Auth::user();
             Notification::send($users, new ExpiredDateNotification($attribute));
         });
     }

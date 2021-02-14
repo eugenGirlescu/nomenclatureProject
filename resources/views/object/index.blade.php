@@ -4,6 +4,10 @@
     <div class="row">
         @if(auth()->check() && Auth::user()->isAdmin == 'normal')
         <div class="card">
+            <div class="col text-center">
+                <a href="{{ route('home') }}" class="btn btn-primary">Dashboard</a>
+                <a href="{{ route('object.create') }}" class="btn btn-danger">Create object</a>
+            </div>
             <div class="card-header">
                 <h1 class="text-center"> User objects</h1>
             </div>
@@ -31,6 +35,10 @@
             @endforeach
         </div>
         @else
+        <div class="col text-center">
+            <a href="{{ route('home') }}" class="btn btn-primary">Dashboard</a>
+            <a href="{{ route('object.create') }}" class="btn btn-danger">Create object</a>
+        </div>
         <p class="alert alert-primary" role="alert">{{ Auth::user()->name }}, you are the admin</p>
         @if ($message = Session::get('success'))
         <div class="alert alert-success">

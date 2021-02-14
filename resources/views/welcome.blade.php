@@ -7,6 +7,10 @@
 <h1 class="text-center">
     Hello my friend!
 </h1>
+<div class="col text-center">
+    <a href="{{ route('object.index') }}" class="btn btn-primary">View list</a>
+    <a href="{{ route('object.create') }}" class="btn btn-danger">Create object</a>
+</div>
 @else
 <div class="container">
     <div class="row">

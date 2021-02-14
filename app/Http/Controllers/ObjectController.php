@@ -33,7 +33,6 @@ class ObjectController extends Controller
         join('attributes', 'attributes.object_id', '=', 'object_models.id')->
         get();
       
-        
         return view('object.index', compact('userObject', 'adminObjects'));
     }
 

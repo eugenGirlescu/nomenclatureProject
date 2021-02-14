@@ -21,7 +21,9 @@ class NotificationController extends Controller
     public function notifications()
     {
         $user = auth()->user();
-        $notification = Notifications::where('notifiable_id', $user->id)->get();
+        $notification = Notifications::where('notifiable_id', $user->id)->
+        where('read_at', '=', null)->
+        get();
       
         $notify = [];
         foreach ($notification as $not) {

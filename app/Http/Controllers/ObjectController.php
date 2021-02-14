@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ObjectModel;
+use App\Models\User;
 use App\Http\Requests\ObjectRequest;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class ObjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +22,19 @@ class ObjectController extends Controller
      */
     public function index()
     {
-        return view('object.index');
+        $userId = Auth::user()->id;
+
+        $userObject = User::join('object_models', 'object_models.user_id', '=', 'users.id')->
+        join('attributes', 'attributes.object_id', '=', 'object_models.id')->
+        where('isAdmin', 'normal')->
+        get();
+
+        $adminObjects = User::join('object_models', 'object_models.user_id', '=', 'users.id')->
+        join('attributes', 'attributes.object_id', '=', 'object_models.id')->
+        get();
+      
+        
+        return view('object.index', compact('userObject', 'adminObjects'));
     }
 
     /**
@@ -67,7 +85,7 @@ class ObjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('object.edit', ['obj' =>ObjectModel::findOrFail($id)]);
     }
 
     /**
@@ -79,7 +97,15 @@ class ObjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:6',
+        ]);
+        $object = ObjectModel::find($id);
+        $object->user_id = Auth::id();
+        $object->name = $request->name;
+        $object->update();
+
+        return redirect()->route('object.index')->with('success', 'Object updated!');
     }
 
     /**

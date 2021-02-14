@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\User;
 use App\Notifications\ExpiredDateNotification;
 use App\Models\Attribute;
+use App\Console\Commands\SendNotification;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,7 +17,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        SendNotification::class
     ];
 
     /**
@@ -27,11 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            $attribute = Attribute::where('expired_at', '=', Carbon::now()->addDays(5))->toDateString();
-            $users = Auth::user();
-            Notification::send($users, new ExpiredDateNotification($attribute));
-        });
+        $schedule->command('command:SendNotification');
     }
 
     /**
